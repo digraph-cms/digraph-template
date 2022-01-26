@@ -1,0 +1,26 @@
+{
+    "name": "digraphcms/digraph-template",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "MySite\\": "src/"
+        }
+    },
+    "authors": [],
+    "minimum-stability": "dev",
+    "require": {
+        "digraphcms/digraph-core": "^2"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "phinx migrate"
+        ],
+        "post-update-cmd": [
+            "phinx migrate"
+        ],
+        "server": [
+            "php -S localhost:8000 -t web web/index.php"
+        ]
+    }
+}

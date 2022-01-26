@@ -1,0 +1,12 @@
+/vendor/
+/digraph-env.json
+
+/cache/*
+!/cache/README.md
+
+/storage/*
+!/storage/README.md
+
+/web/files/*
+!/web/files/README.md
+!/web/files/.htaccess

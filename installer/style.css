@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+}
+
+*:first-child {
+    margin-top: 0;
+}
+
+*:last-child {
+    margin-bottom: 0;
+}
+
+a:link {
+    color: #309;
+}
+
+a:hover,
+a:focus {
+    color: #30c;
+}
+
+a:active {
+    color: #c00;
+}
+
+.step {
+    margin: 1em;
+    padding: 1em;
+    border: 2px solid #eee;
+    border-radius: 0.5em;
+}
+
+.step h1 {
+    font-size: 1.5em;
+}
+
+.step--done {
+    border-color: #0c0;
+}
+
+.step--incomplete {
+    border-color: #c30;
+}
