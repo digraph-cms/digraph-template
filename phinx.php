@@ -2,12 +2,15 @@
 
 use DigraphCMS\Config;
 use DigraphCMS\DB\DB;
+use DigraphCMS\Digraph;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-Config::readFile(__DIR__ . '/digraph.json');
-Config::readFile(__DIR__ . '/digraph-env.json');
-Config::set('paths.base', realpath(__DIR__));
+Digraph::initialize(function () {
+    Config::readFile(__DIR__ . '/digraph.json');
+    Config::readFile(__DIR__ . '/digraph-env.json');
+    Config::set('paths.base', realpath(__DIR__));
+});
 
 return
     [

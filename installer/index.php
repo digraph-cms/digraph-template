@@ -1,11 +1,14 @@
 <?php
 
 use DigraphCMS\Config;
+use DigraphCMS\Digraph;
 
 @session_start();
 if (is_file(__DIR__ . '/../vendor/autoload.php')) {
     require_once __DIR__ . '/../vendor/autoload.php';
-    Config::set('paths.root', realpath(__DIR__ . '/..'));
+    Digraph::initialize(function () {
+        Config::set('paths.root', realpath(__DIR__ . '/..'));
+    });
 }
 ?>
 <!DOCTYPE html>

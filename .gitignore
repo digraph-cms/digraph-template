@@ -1,5 +1,6 @@
 /vendor/
 /digraph-env.json
+/composer.lock
 
 /cache/*
 !/cache/README.md
