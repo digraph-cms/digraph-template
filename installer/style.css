@@ -45,7 +45,8 @@ h1 {
     color: #0c0;
 }
 
-.button {
+.button,
+input[type="submit"] {
     display: inline-block;
     padding: 0.5em 1em;
     text-decoration: none;
@@ -54,9 +55,11 @@ h1 {
     border-radius: 0.5em;
     font-weight: bold;
     cursor: pointer;
+    border: 0;
 }
 
-.button:hover {
+.button:hover,
+input[type="submit"]:hover {
     filter: brightness(1.2) saturate(1.2);
 }
 
@@ -93,4 +96,25 @@ hr {
     border: 0;
     border-top: 2px dotted #ddd;
     margin: 0.5em -0.5em;
+}
+
+.form-field {
+    margin: 0.25em 0;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="radio"]+label,
+input[type="checkbox"]+label {
+    font-weight: normal;
+}
+
+.form-field:last-child {
+    margin-bottom: 0;
+}
+
+.form-field:first-child {
+    margin-top: 0;
 }
