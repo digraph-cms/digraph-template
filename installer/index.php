@@ -3,7 +3,6 @@
 use DigraphCMS\Config;
 use DigraphCMS\Context;
 use DigraphCMS\Digraph;
-use DigraphCMS\URL\URL;
 use Flatrr\SelfReferencingFlatArray;
 
 @session_start();
@@ -45,6 +44,7 @@ class Wizard
     const INSTALL_STEPS = [
         'Environment check',
         'File permissions',
+        'Database config',
         'Database setup',
         'User sources',
         'Global config',

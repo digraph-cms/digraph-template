@@ -13,10 +13,7 @@
         "digraphcms/digraph-core": "^2"
     },
     "scripts": {
-        "post-install-cmd": [
-            "phinx migrate"
-        ],
-        "post-update-cmd": [
+        "migrate": [
             "phinx migrate"
         ],
         "server": [
