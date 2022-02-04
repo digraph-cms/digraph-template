@@ -1,0 +1,21 @@
+fields:
+  site:
+    name: Unconfigured site
+theme:
+  bundle_css:
+  bundle_js:
+  timezone:
+user_sources: {}
+errors:
+  display_trace: false
+cache:
+  path: "${paths.base}/cache"
+  ttl: null
+files:
+  ttl: null
+  css: null
+    minify: null
+    sourcemap: null
+    keepimportantcomments: true
+images:
+  ttl: null

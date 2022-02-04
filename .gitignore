@@ -1,5 +1,5 @@
 /vendor/
-/digraph-env.json
+/digraph-env.yaml
 /composer.lock
 
 /cache/*

@@ -2,15 +2,24 @@
 
 use DigraphCMS\Config;
 use DigraphCMS\DB\DB;
-use DigraphCMS\Digraph;
+use DigraphCMS\Initialization\InitializationState;
+use DigraphCMS\Initialization\Initializer;
+use DigraphCMS\Plugins\Plugins;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-Digraph::initialize(function () {
-    Config::readFile(__DIR__ . '/digraph.json');
-    Config::readFile(__DIR__ . '/digraph-env.json');
-    Config::set('paths.base', realpath(__DIR__));
-});
+// load plugins from composer
+Plugins::loadFromComposer(__DIR__ . '/composer.lock');
+
+// initialize config
+Initializer::run(
+    'initialization',
+    function (InitializationState $state) {
+        $state->mergeConfig(Config::parseYamlFile(__DIR__ . '/digraph.yaml'), true);
+        $state->mergeConfig(Config::parseYamlFile(__DIR__ . '/digraph-env.yaml'), true);
+        $state->config('paths.base', __DIR__);
+    }
+);
 
 return
     [
