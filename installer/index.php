@@ -1,5 +1,7 @@
 <?php
 
+use DigraphCMS\Cache\CacheableState;
+use DigraphCMS\Cache\CachedInitializer;
 use DigraphCMS\Config;
 use DigraphCMS\Context;
 use DigraphCMS\Digraph;
@@ -9,10 +11,15 @@ use Flatrr\SelfReferencingFlatArray;
 if (is_file(__DIR__ . '/../vendor/autoload.php')) {
     define('DIGRAPH_LOADED', true);
     require_once __DIR__ . '/../vendor/autoload.php';
-    Digraph::initialize(function () {
-        Config::set('paths.root', realpath(__DIR__ . '/..'));
-        Config::set('paths.web', realpath(__DIR__ . '/../web'));
-    });
+    // initialize config
+    CachedInitializer::run(
+        'initialization',
+        function (CacheableState $state) {
+            $state->mergeConfig(Config::parseYamlFile(__DIR__ . '/../digraph.yaml'), true);
+            $state->mergeConfig(Config::parseYamlFile(__DIR__ . '/../digraph-env.yaml'), true);
+            $state->config('paths.base', realpath(__DIR__ . '/..'));
+        }
+    );
     Context::url(Digraph::actualUrl());
     Context::request(Digraph::actualRequest());
 } else {
@@ -59,15 +66,16 @@ class Wizard
 
     public static function initialize()
     {
-        static::$config_global = new SelfReferencingFlatArray(
-            json_decode(file_get_contents(__DIR__ . '/../digraph.json'), true)
-        );
-        static::$config_env = new SelfReferencingFlatArray();
-        if (file_exists(__DIR__ . '/../digraph-env.json') && $contents = file_get_contents(__DIR__ . '/../digraph-env.json')) {
-            static::$config_env->merge(json_decode($contents, true));
+        if (DIGRAPH_LOADED) {
+            static::$config_global = new SelfReferencingFlatArray(
+                Config::parseYamlFile(__DIR__ . '/../digraph.yaml')
+            );
+            static::$config_env = new SelfReferencingFlatArray(
+                Config::parseYamlFile(__DIR__ . '/../digraph-env.yaml')
+            );
+            static::$config_combined = clone static::$config_global;
+            static::$config_combined->merge(static::$config_env->get(null, true));
         }
-        static::$config_combined = clone static::$config_global;
-        static::$config_combined->merge(static::$config_env->get(null, true));
     }
 
     public static function run()
@@ -131,20 +139,14 @@ class Wizard
         if ($global) {
             static::$config_global->set($key, $value);
             file_put_contents(
-                __DIR__ . '/../digraph.json',
-                json_encode(
-                    static::$config_global->get(null, true),
-                    JSON_PRETTY_PRINT
-                )
+                __DIR__ . '/../digraph.yaml',
+                Config::dumpYaml(static::$config_global->get(null, true))
             );
         } else {
             static::$config_env->set($key, $value);
             file_put_contents(
-                __DIR__ . '/../digraph-env.json',
-                json_encode(
-                    static::$config_env->get(null, true),
-                    JSON_PRETTY_PRINT
-                )
+                __DIR__ . '/../digraph-env.yaml',
+                Config::dumpYaml(static::$config_env->get(null, true))
             );
         }
         static::$config_combined = clone static::$config_global;
@@ -156,19 +158,16 @@ class Wizard
         if ($global) {
             static::$config_global->unset($key);
             file_put_contents(
-                __DIR__ . '/../digraph.json',
-                json_encode(
-                    static::$config_global->get(null, true),
-                    JSON_PRETTY_PRINT
-                )
+                __DIR__ . '/../digraph.yaml',
+                Config::dumpYaml(static::$config_global->get(null, true))
             );
         } else {
             static::$config_env->unset($key);
             file_put_contents(
-                __DIR__ . '/../digraph-env.json',
+                __DIR__ . '/../digraph-env.yaml',
                 json_encode(
                     static::$config_env->get(null, true),
-                    JSON_PRETTY_PRINT
+                    Config::dumpYaml(static::$config_env->get(null, true))
                 )
             );
         }

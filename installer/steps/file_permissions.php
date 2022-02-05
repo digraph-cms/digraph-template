@@ -2,15 +2,15 @@
 
 use DigraphCMS\Config;
 
-$paths = ['cache/', 'storage/', 'web/files/', 'web/install.php', 'digraph.json', 'digraph-env.json'];
-$root = Config::get('paths.root');
+$paths = ['cache/', 'storage/', 'web/files/', 'web/install.php', 'digraph.yaml', 'digraph-env.yaml'];
+$root = Config::get('paths.base');
 
-// check that digraph-env.json exists
-if (!is_file("$root/digraph-env.json")) {
-    if (file_put_contents("$root/digraph-env.json", "{}")) {
-        Wizard::confirmation("Created <code>digraph-env.json</code>");
+// check that digraph-env.yaml exists
+if (!is_file("$root/digraph-env.yaml")) {
+    if (file_put_contents("$root/digraph-env.yaml", "{}")) {
+        Wizard::confirmation("Created <code>digraph-env.yaml</code>");
     } else {
-        Wizard::error("You must create a file writeable by PHP at <code>$root/digraph-env.json</code>");
+        Wizard::error("You must create a file writeable by PHP at <code>$root/digraph-env.yaml</code>");
     }
 }
 

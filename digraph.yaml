@@ -2,10 +2,9 @@ fields:
   site:
     name: Unconfigured site
 theme:
-  bundle_css:
-  bundle_js:
-  timezone:
-user_sources: {}
+  bundle_css: true
+  bundle_js: true
+  timezone: null
 errors:
   display_trace: false
 cache:
@@ -14,8 +13,8 @@ cache:
 files:
   ttl: null
   css: null
-    minify: null
-    sourcemap: null
+    minify: true
+    sourcemap: false
     keepimportantcomments: true
 images:
   ttl: null

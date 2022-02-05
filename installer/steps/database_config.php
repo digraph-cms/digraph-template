@@ -23,7 +23,7 @@ switch ($_SESSION['dbmode']) {
         break;
     case 'sqlite':
         Wizard::unsetConfig('db');
-        Wizard::confirmation('Database setting written to <code>digraph-env.json</code>');
+        Wizard::confirmation('Database setting written to <code>digraph-env.yaml</code>');
         echo '<p>No configuration is necessary to use a SQLite database.</p>';
         break;
     case 'connect':
@@ -62,7 +62,7 @@ switch ($_SESSION['dbmode']) {
                 DB::pdo();
                 Wizard::confirmation('Database connection successful');
                 Wizard::setConfig('db', $dbConfig);
-                Wizard::confirmation('Database setting written to <code>digraph-env.json</code>');
+                Wizard::confirmation('Database setting written to <code>digraph-env.yaml</code>');
             } catch (\Throwable $th) {
                 Wizard::error('Error: ' . $th->getMessage());
             }

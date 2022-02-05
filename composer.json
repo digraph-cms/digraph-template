@@ -9,8 +9,13 @@
     },
     "authors": [],
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "digraphcms/digraph-core": "^2"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "apcu-autoloader": true
     },
     "scripts": {
         "migrate": [

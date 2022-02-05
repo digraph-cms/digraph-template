@@ -1,9 +1,9 @@
 <?php
 
+use DigraphCMS\Cache\CacheableState;
+use DigraphCMS\Cache\CachedInitializer;
 use DigraphCMS\Config;
 use DigraphCMS\DB\DB;
-use DigraphCMS\Initialization\InitializationState;
-use DigraphCMS\Initialization\Initializer;
 use DigraphCMS\Plugins\Plugins;
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -12,9 +12,9 @@ require_once __DIR__ . '/vendor/autoload.php';
 Plugins::loadFromComposer(__DIR__ . '/composer.lock');
 
 // initialize config
-Initializer::run(
+CachedInitializer::run(
     'initialization',
-    function (InitializationState $state) {
+    function (CacheableState $state) {
         $state->mergeConfig(Config::parseYamlFile(__DIR__ . '/digraph.yaml'), true);
         $state->mergeConfig(Config::parseYamlFile(__DIR__ . '/digraph-env.yaml'), true);
         $state->config('paths.base', __DIR__);
